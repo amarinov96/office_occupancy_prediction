@@ -15,51 +15,14 @@ def load_data():
     return shuffle(train_data), shuffle(val_data), shuffle(test_data)
 
 def build_data_vectors(train_data, val_data, test_data):
-
-    # build X and y vectors for SVM
+    """build X and y vectors for SVM"""
     X_train = []
     X_val = []
     X_test = []
-
-    # get temperature feature
-    temperatures_train = train_data["Temperature"].values
-    temperatures_val = val_data["Temperature"].values
-    temperatures_test = test_data["Temperature"].values
-    X_train.append(temperatures_train)
-    X_val.append(temperatures_val)
-    X_test.append(temperatures_test)
-    
-    # get humidity feature
-    humidities_train = train_data["Humidity"].values
-    humidities_val= val_data["Humidity"].values
-    humidities_test= test_data["Humidity"].values
-    X_train.append(humidities_train)
-    X_val.append(humidities_val)
-    X_test.append(humidities_test)
-    
-    # get light feature
-    lights_train = train_data["Light"].values
-    lights_val= val_data["Light"].values
-    lights_test= test_data["Light"].values
-    X_train.append(lights_train)
-    X_val.append(lights_val)
-    X_test.append(lights_test)
-
-    # get C02 feature
-    co2_train = train_data["CO2"].values
-    co2_val= val_data["CO2"].values
-    co2_test= test_data["CO2"].values
-    X_train.append(co2_train)
-    X_val.append(co2_val)
-    X_test.append(co2_test)
-
-    # get humidity ratio feature
-    humidity_ratios_train = train_data["HumidityRatio"].values
-    humidity_ratios_val= val_data["HumidityRatio"].values
-    humidity_ratios_test= test_data["HumidityRatio"].values
-    X_train.append(humidity_ratios_train)
-    X_val.append(humidity_ratios_val)
-    X_test.append(humidity_ratios_test)
+    for xvar in ['Temperature', 'Humidity', 'Light', 'CO2', 'HumidityRatio']:
+        X_train += [train_data[xvar].values]
+        X_val += [val_data[xvar].values]
+        X_test += [test_data[xvar].values]
 
     # build y vectors
     y_train = train_data["Occupancy"].values
